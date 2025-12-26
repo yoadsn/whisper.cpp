@@ -8852,9 +8852,9 @@ kernel void kernel_mul_mm(
 
     mpp::tensor_ops::matmul2d<
         mpp::tensor_ops::matmul2d_descriptor(NR1, NR0, NK, false, true, false, mpp::tensor_ops::matmul2d_descriptor::mode::multiply_accumulate),
-        execution_simdgroups<4>> mm;
+        execution_simdgroups<4>, S1, S0> mm;
 
-    auto cT = mm.get_destination_cooperative_tensor<decltype(tA), decltype(tB), float>();
+    auto cT = mm.template get_destination_cooperative_tensor<decltype(tB), decltype(tA), float>();
 #endif
 
     for (int loop_k = 0; loop_k < args.ne00; loop_k += NK) {
@@ -9236,9 +9236,9 @@ kernel void kernel_mul_mm_id(
 
     mpp::tensor_ops::matmul2d<
         mpp::tensor_ops::matmul2d_descriptor(NR1, NR0, NK, false, true, false, mpp::tensor_ops::matmul2d_descriptor::mode::multiply_accumulate),
-        execution_simdgroups<4>> mm;
+        execution_simdgroups<4>, S1, S0> mm;
 
-    auto cT = mm.get_destination_cooperative_tensor<decltype(tA), decltype(tB), float>();
+    auto cT = mm.template get_destination_cooperative_tensor<decltype(tB), decltype(tA), float>();
 #endif
 
     for (int loop_k = 0; loop_k < args.ne00; loop_k += NK) {
